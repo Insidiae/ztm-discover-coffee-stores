@@ -16,6 +16,8 @@ export default function Home() {
 					Welcome to <a href="https://nextjs.org">Next.js!</a>
 				</h1>
 
+				<h2 className="text-2xl text-blue-400">Now with Tailwind!</h2>
+
 				<p className={styles.description}>
 					Get started by editing{" "}
 					<code className={styles.code}>pages/index.tsx</code>
