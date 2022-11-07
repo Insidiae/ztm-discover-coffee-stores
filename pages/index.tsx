@@ -4,6 +4,8 @@ import Image from "next/image";
 import Banner from "../components/Banner";
 import Card from "../components/Card";
 
+import coffeeStores from "../data/coffee-stores.json";
+
 export default function Home() {
 	function handleBannerBtnClick() {
 		console.log("hey!");
@@ -27,18 +29,15 @@ export default function Home() {
 				</div>
 
 				<div className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3">
-					<Card
-						name="DarkHorse Coffee"
-						href="/coffee-store/darkhorse-coffee"
-						imgUrl="/static/background.png"
-						imgAlt=""
-					/>
-					<Card
-						name="DarkHorse Coffee"
-						href="/coffee-store/darkhorse-coffee"
-						imgUrl="/static/background.png"
-						imgAlt=""
-					/>
+					{coffeeStores.map((coffeeStore) => (
+						<Card
+							key={coffeeStore.id}
+							name={coffeeStore.name}
+							href={`/coffee-store/${coffeeStore.id}`}
+							imgUrl={coffeeStore.imgUrl}
+							imgAlt={coffeeStore.name}
+						/>
+					))}
 				</div>
 			</main>
 		</div>

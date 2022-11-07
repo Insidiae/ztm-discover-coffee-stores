@@ -22,7 +22,7 @@ export default function Card(props: CardProps) {
 				</div>
 				<div className="text-white-100">
 					<Image
-						className="rounded-xl"
+						className="rounded-xl w-[260px] h-[160px] object-cover"
 						src={props.imgUrl}
 						alt={props.imgAlt}
 						width={260}
