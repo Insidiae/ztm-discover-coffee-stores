@@ -4,9 +4,23 @@ import Image from "next/image";
 import Banner from "../components/Banner";
 import Card from "../components/Card";
 
-import coffeeStores from "../data/coffee-stores.json";
+import type { GetStaticProps, InferGetStaticPropsType } from "next";
 
-export default function Home() {
+import coffeeStoresData from "../data/coffee-stores.json";
+
+export const getStaticProps: GetStaticProps<{
+	coffeeStores: typeof coffeeStoresData;
+}> = (context) => {
+	return {
+		props: {
+			coffeeStores: coffeeStoresData,
+		},
+	};
+};
+
+export default function Home(
+	props: InferGetStaticPropsType<typeof getStaticProps>
+) {
 	function handleBannerBtnClick() {
 		console.log("hey!");
 	}
@@ -28,17 +42,24 @@ export default function Home() {
 					<Image src="/static/hero-image.png" alt="" width={700} height={400} />
 				</div>
 
-				<div className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3">
-					{coffeeStores.map((coffeeStore) => (
-						<Card
-							key={coffeeStore.id}
-							name={coffeeStore.name}
-							href={`/coffee-store/${coffeeStore.id}`}
-							imgUrl={coffeeStore.imgUrl}
-							imgAlt={coffeeStore.name}
-						/>
-					))}
-				</div>
+				{props.coffeeStores.length > 0 ? (
+					<>
+						<h2 className="mt-8 pb-8 text-4xl text-white-100 font-bold">
+							Toronto Stores
+						</h2>
+						<div className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3">
+							{props.coffeeStores.map((coffeeStore) => (
+								<Card
+									key={coffeeStore.id}
+									name={coffeeStore.name}
+									href={`/coffee-store/${coffeeStore.id}`}
+									imgUrl={coffeeStore.imgUrl}
+									imgAlt={coffeeStore.name}
+								/>
+							))}
+						</div>
+					</>
+				) : null}
 			</main>
 		</div>
 	);
