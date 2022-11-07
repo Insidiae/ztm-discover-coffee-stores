@@ -39,7 +39,13 @@ export default function Home(
 					onButtonClick={handleBannerBtnClick}
 				/>
 				<div className="absolute top-0 z-10 md:right-[20%] lg:right-[20%]">
-					<Image src="/static/hero-image.png" alt="" width={700} height={400} />
+					<Image
+						src="/static/hero-image.png"
+						alt=""
+						width={700}
+						height={400}
+						className="w-[700px] h-[400px]"
+					/>
 				</div>
 
 				{props.coffeeStores.length > 0 ? (
