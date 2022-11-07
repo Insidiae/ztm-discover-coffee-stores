@@ -9,8 +9,13 @@ const ibm = IBM_Plex_Sans({
 
 export default function App({ Component, pageProps }: AppProps) {
 	return (
-		<div className={ibm.className}>
+		<>
+			<style jsx global>{`
+				html {
+					font-family: ${ibm.style.fontFamily};
+				}
+			`}</style>
 			<Component {...pageProps} />
-		</div>
+		</>
 	);
 }

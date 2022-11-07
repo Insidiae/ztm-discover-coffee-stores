@@ -1,6 +1,8 @@
 import Head from "next/head";
 import Image from "next/image";
+
 import Banner from "../components/Banner";
+import Card from "../components/Card";
 
 export default function Home() {
 	function handleBannerBtnClick() {
@@ -22,6 +24,21 @@ export default function Home() {
 				/>
 				<div className="absolute top-0 z-10 md:right-[20%] lg:right-[20%]">
 					<Image src="/static/hero-image.png" alt="" width={700} height={400} />
+				</div>
+
+				<div className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3">
+					<Card
+						name="DarkHorse Coffee"
+						href="/coffee-store/darkhorse-coffee"
+						imgUrl="/static/background.png"
+						imgAlt=""
+					/>
+					<Card
+						name="DarkHorse Coffee"
+						href="/coffee-store/darkhorse-coffee"
+						imgUrl="/static/background.png"
+						imgAlt=""
+					/>
 				</div>
 			</main>
 		</div>
