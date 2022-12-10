@@ -3,39 +3,56 @@ import Head from "next/head";
 import Link from "next/link";
 import Image from "next/image";
 
+import { getCoffeeStores } from "../../lib/coffee-stores";
+
 import type {
 	GetStaticProps,
 	InferGetStaticPropsType,
 	GetStaticPaths,
 } from "next";
+import type { CoffeeStoreData } from "../../lib/coffee-stores";
 
-import coffeeStoresData from "../../data/coffee-stores.json";
+export const getStaticPaths: GetStaticPaths = async () => {
+	const coffeeStores = await getCoffeeStores({
+		lat: 14.581850805315819,
+		lng: 120.97703241286848,
+	});
 
-export const getStaticPaths: GetStaticPaths = () => {
-	const paths = coffeeStoresData.map((storeData) => {
+	const paths = coffeeStores.map((storeData) => {
 		return {
 			params: {
-				id: storeData.id.toString(),
+				id: storeData.fsq_id,
 			},
 		};
 	});
 
 	return {
 		paths,
-		fallback: true,
+		fallback: "blocking",
 	};
 };
 
-type CoffeeStoreData = typeof coffeeStoresData[number];
-
 export const getStaticProps: GetStaticProps<{
 	coffeeStore: CoffeeStoreData;
-}> = (context) => {
+}> = async (context) => {
+	const coffeeStores = await getCoffeeStores({
+		lat: 14.581850805315819,
+		lng: 120.97703241286848,
+	});
+
+	const coffeeStore = coffeeStores.find(
+		(storeData) => storeData.fsq_id === context.params?.id
+	);
+
+	if (!coffeeStore) {
+		return {
+			notFound: true,
+		};
+	}
+
 	return {
 		props: {
-			coffeeStore: coffeeStoresData.find(
-				(storeData) => storeData.id.toString() === context.params?.id
-			) as CoffeeStoreData,
+			coffeeStore,
 		},
 	};
 };
@@ -72,7 +89,10 @@ export default function CoffeeShop(
 						</h1>
 					</div>
 					<Image
-						src={props.coffeeStore.imgUrl}
+						src={
+							props.coffeeStore.imgUrl ??
+							"https://images.unsplash.com/photo-1504753793650-d4a2b783c15e?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=2000&q=80"
+						}
 						width={600}
 						height={360}
 						alt={props.coffeeStore.name}
@@ -89,7 +109,7 @@ export default function CoffeeShop(
 							height={24}
 						/>
 						<p className="m-0 pl-2 text-2xl font-bold">
-							{props.coffeeStore.address}
+							{props.coffeeStore.location.address}
 						</p>
 					</div>
 					<div className="mb-4 flex">
@@ -100,7 +120,8 @@ export default function CoffeeShop(
 							height={24}
 						/>
 						<p className="m-0 pl-2 text-2xl font-bold">
-							{props.coffeeStore.neighbourhood}
+							{props.coffeeStore.location.neighborhood?.[0] ??
+								props.coffeeStore.location.region}
 						</p>
 					</div>
 					<div className="mb-4 flex">

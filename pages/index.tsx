@@ -4,16 +4,22 @@ import Image from "next/image";
 import Banner from "../components/Banner";
 import Card from "../components/Card";
 
-import type { GetStaticProps, InferGetStaticPropsType } from "next";
+import { getCoffeeStores } from "../lib/coffee-stores";
 
-import coffeeStoresData from "../data/coffee-stores.json";
+import type { GetStaticProps, InferGetStaticPropsType } from "next";
+import type { CoffeeStoreData } from "../lib/coffee-stores";
 
 export const getStaticProps: GetStaticProps<{
-	coffeeStores: typeof coffeeStoresData;
-}> = (context) => {
+	coffeeStores: CoffeeStoreData[];
+}> = async (context) => {
+	const coffeeStores = await getCoffeeStores({
+		lat: 14.581850805315819,
+		lng: 120.97703241286848,
+	});
+
 	return {
 		props: {
-			coffeeStores: coffeeStoresData,
+			coffeeStores,
 		},
 	};
 };
@@ -56,10 +62,13 @@ export default function Home(
 						<div className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3">
 							{props.coffeeStores.map((coffeeStore) => (
 								<Card
-									key={coffeeStore.id}
+									key={coffeeStore.fsq_id}
 									name={coffeeStore.name}
-									href={`/coffee-store/${coffeeStore.id}`}
-									imgUrl={coffeeStore.imgUrl}
+									href={`/coffee-store/${coffeeStore.fsq_id}`}
+									imgUrl={
+										coffeeStore.imgUrl ??
+										"https://images.unsplash.com/photo-1504753793650-d4a2b783c15e?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=2000&q=80"
+									}
 									imgAlt={coffeeStore.name}
 								/>
 							))}
