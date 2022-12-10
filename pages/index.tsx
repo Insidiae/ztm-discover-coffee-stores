@@ -33,7 +33,7 @@ export default function Home(
 				<link rel="icon" href="/favicon.ico" />
 			</Head>
 
-			<main className="max-w-6xl mt-10 mx-auto px-4 sm:mt-12 sm:px-6 md:mt-16 lg:mt-20 lg:px-8 xl:mt-28">
+			<main className="mx-auto mt-10 max-w-6xl px-4 sm:mt-12 sm:px-6 md:mt-16 lg:mt-20 lg:px-8 xl:mt-28">
 				<Banner
 					buttonText="View stores nearby"
 					onButtonClick={handleBannerBtnClick}
@@ -44,13 +44,13 @@ export default function Home(
 						alt=""
 						width={700}
 						height={400}
-						className="w-[700px] h-[400px]"
+						className="h-[400px] w-[700px]"
 					/>
 				</div>
 
 				{props.coffeeStores.length > 0 ? (
 					<>
-						<h2 className="mt-8 pb-8 text-4xl text-white-100 font-bold">
+						<h2 className="mt-8 pb-8 text-4xl font-bold text-white-100">
 							Toronto Stores
 						</h2>
 						<div className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3">

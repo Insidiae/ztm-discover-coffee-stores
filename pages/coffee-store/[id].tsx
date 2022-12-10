@@ -67,7 +67,7 @@ export default function CoffeeShop(
 						<Link href="/">← Back to home</Link>
 					</div>
 					<div className="my-4">
-						<h1 className="text-white-100 text-4xl font-bold text-ellipsis whitespace-normal overflow-hidden">
+						<h1 className="overflow-hidden text-ellipsis whitespace-normal text-4xl font-bold text-white-100">
 							{props.coffeeStore.name}
 						</h1>
 					</div>
@@ -76,12 +76,12 @@ export default function CoffeeShop(
 						width={600}
 						height={360}
 						alt={props.coffeeStore.name}
-						className="w-[600px] h-[360px] max-w-full border-none align-middle object-cover rounded-xl shadow-2xl"
+						className="h-[360px] w-[600px] max-w-full rounded-xl border-none object-cover align-middle shadow-2xl"
 					/>
 				</div>
 
-				<div className="flex flex-col self-center mt-16 ml-2 p-4 rounded-2xl text-purple-darker bg-white bg-opacity-40 backdrop-blur-[10px] border border-white border-opacity-20 transition-colors hover:bg-opacity-70 hover:border-opacity-100 lg:w-3/4">
-					<div className="flex mb-4">
+				<div className="mt-16 ml-2 flex flex-col self-center rounded-2xl border border-white border-opacity-20 bg-white bg-opacity-40 p-4 text-purple-darker backdrop-blur-[10px] transition-colors hover:border-opacity-100 hover:bg-opacity-70 lg:w-3/4">
+					<div className="mb-4 flex">
 						<Image
 							src="/static/icons/places.svg"
 							alt=""
@@ -92,7 +92,7 @@ export default function CoffeeShop(
 							{props.coffeeStore.address}
 						</p>
 					</div>
-					<div className="flex mb-4">
+					<div className="mb-4 flex">
 						<Image
 							src="/static/icons/nearMe.svg"
 							alt=""
@@ -103,13 +103,13 @@ export default function CoffeeShop(
 							{props.coffeeStore.neighbourhood}
 						</p>
 					</div>
-					<div className="flex mb-4">
+					<div className="mb-4 flex">
 						<Image src="/static/icons/star.svg" alt="" width={24} height={24} />
 						<p className="m-0 pl-2 text-2xl font-bold">1</p>
 					</div>
 
 					<button
-						className="w-fit my-4 p-2 bg-purple-dark text-base leading-[normal] text-white font-semibold outline-none border-none cursor-pointer hover:bg-purple focus:bg-purple focus:outline-dotted focus:outline-4 focus:outline-current"
+						className="my-4 w-fit cursor-pointer border-none bg-purple-dark p-2 text-base font-semibold leading-[normal] text-white outline-none hover:bg-purple focus:bg-purple focus:outline-dotted focus:outline-4 focus:outline-current"
 						onClick={handleUpvote}
 					>
 						Up vote!
