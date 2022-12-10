@@ -62,9 +62,9 @@ export default function Home(
 						<div className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3">
 							{props.coffeeStores.map((coffeeStore) => (
 								<Card
-									key={coffeeStore.fsq_id}
+									key={coffeeStore.id}
 									name={coffeeStore.name}
-									href={`/coffee-store/${coffeeStore.fsq_id}`}
+									href={`/coffee-store/${coffeeStore.id}`}
 									imgUrl={
 										coffeeStore.imgUrl ??
 										"https://images.unsplash.com/photo-1504753793650-d4a2b783c15e?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=2000&q=80"

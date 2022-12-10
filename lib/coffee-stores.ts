@@ -1,12 +1,28 @@
+import { createApi } from "unsplash-js";
+
+const unsplashApi = createApi({
+	accessKey: process.env.UNSPLASH_ACCESS_KEY,
+});
+
 export type CoffeeStoreData = {
+	id: string;
+	address: string | null;
+	name: string;
+	neighborhood: string | null;
+	imgUrl: string | null;
+};
+
+type FoursquareData = {
 	fsq_id: string;
 	name: string;
 	location: {
-		address: string;
-		region: string;
-		neighborhood: string[];
+		address?: string;
+		neighborhood?: string[];
 	};
-	imgUrl: never;
+};
+
+type FoursquareApiResponse = {
+	results: FoursquareData[];
 };
 
 const FOURSQUARE_API_BASE_URL = "https://api.foursquare.com/v3/places/search";
@@ -36,7 +52,26 @@ export async function getCoffeeStores({
 		options
 	);
 
-	const data = await res.json();
+	const data = (await res.json()) as FoursquareApiResponse;
 
-	return data.results as CoffeeStoreData[];
+	const photos = await getCoffeeStorePhotos();
+
+	return data.results.map((result, idx) => {
+		return {
+			id: result.fsq_id,
+			address: result.location.address ?? null,
+			name: result.name,
+			neighborhood: result.location.neighborhood?.[0] ?? null,
+			imgUrl: photos?.[idx] ?? null,
+		};
+	});
+}
+
+export async function getCoffeeStorePhotos() {
+	const res = await unsplashApi.search.getPhotos({
+		query: "coffee shop",
+		perPage: 30,
+	});
+
+	return res.response?.results.map((result) => result.urls["small"]);
 }

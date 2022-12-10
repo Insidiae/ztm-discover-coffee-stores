@@ -21,7 +21,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
 	const paths = coffeeStores.map((storeData) => {
 		return {
 			params: {
-				id: storeData.fsq_id,
+				id: storeData.id,
 			},
 		};
 	});
@@ -41,7 +41,7 @@ export const getStaticProps: GetStaticProps<{
 	});
 
 	const coffeeStore = coffeeStores.find(
-		(storeData) => storeData.fsq_id === context.params?.id
+		(storeData) => storeData.id === context.params?.id
 	);
 
 	if (!coffeeStore) {
@@ -101,29 +101,32 @@ export default function CoffeeShop(
 				</div>
 
 				<div className="mt-16 ml-2 flex flex-col self-center rounded-2xl border border-white border-opacity-20 bg-white bg-opacity-40 p-4 text-purple-darker backdrop-blur-[10px] transition-colors hover:border-opacity-100 hover:bg-opacity-70 lg:w-3/4">
-					<div className="mb-4 flex">
-						<Image
-							src="/static/icons/places.svg"
-							alt=""
-							width={24}
-							height={24}
-						/>
-						<p className="m-0 pl-2 text-2xl font-bold">
-							{props.coffeeStore.location.address}
-						</p>
-					</div>
-					<div className="mb-4 flex">
-						<Image
-							src="/static/icons/nearMe.svg"
-							alt=""
-							width={24}
-							height={24}
-						/>
-						<p className="m-0 pl-2 text-2xl font-bold">
-							{props.coffeeStore.location.neighborhood?.[0] ??
-								props.coffeeStore.location.region}
-						</p>
-					</div>
+					{props.coffeeStore.address ? (
+						<div className="mb-4 flex">
+							<Image
+								src="/static/icons/places.svg"
+								alt=""
+								width={24}
+								height={24}
+							/>
+							<p className="m-0 pl-2 text-2xl font-bold">
+								{props.coffeeStore.address}
+							</p>
+						</div>
+					) : null}
+					{props.coffeeStore.neighborhood ? (
+						<div className="mb-4 flex">
+							<Image
+								src="/static/icons/nearMe.svg"
+								alt=""
+								width={24}
+								height={24}
+							/>
+							<p className="m-0 pl-2 text-2xl font-bold">
+								{props.coffeeStore.neighborhood}
+							</p>
+						</div>
+					) : null}
 					<div className="mb-4 flex">
 						<Image src="/static/icons/star.svg" alt="" width={24} height={24} />
 						<p className="m-0 pl-2 text-2xl font-bold">1</p>
